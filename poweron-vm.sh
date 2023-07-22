@@ -1,3 +1,3 @@
 vmid=`./getvmid.sh $1`
-ssh root@esx.gw.lo vim-cmd vmsvc/power.on ${vmid}
+ssh root@pve.gw.lo qm start ${vmid}
 
