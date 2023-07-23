@@ -18,5 +18,5 @@ ssh root@pve.gw.lo "qm create $1 \
   --cpu cputype=host --cores 4 --sockets 1 \
   --memory 16000  \
   --net0 bridge=vmbr0,virtio=$3 \
-  --bootdisk scsi0 --scsihw virtio-scsi-single --virtio0 file=impulse1:$1/vm-$1-disk-0.qcow2,cache=unsafe,discard=on,iothread=1,size=200G"
+  --bootdisk scsi0 --scsihw virtio-scsi-single --scsi0 file=impulse1:$1/vm-$1-disk-0.qcow2,iothread=1,size=200G"
 
