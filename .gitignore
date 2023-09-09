@@ -2,5 +2,5 @@ pullsecret.json
 .accesstoken
 .approvecsr.dat
 gw/*
-
+install-config.yaml
 
