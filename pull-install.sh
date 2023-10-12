@@ -1,3 +1,14 @@
+echo "Installing nmstatectl for 4.14 support"
+rm -r -f temp
+mkdir temp
+cd temp
+wget https://github.com/nmstate/nmstate/releases/download/v2.2.16/nmstatectl-macos-x64.zip
+unzip nmstatectl-macos-x64.zip
+mv nmstatectl /usr/local/bin
+chmod +x /usr/local/bin/nmstatectl
+cd ..
+rm -r -f temp
+
 #export theversion="4.12.30"
 export theversion=$1
 export vinfo=$(openshift-install version | head -n 1)

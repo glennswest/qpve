@@ -11,7 +11,8 @@ ssh root@pve.gw.lo "lvcreate -V$disksize -T test-lvm-thin/test-lvm-thin -n $lvmn
 ssh root@pve.gw.lo "qm create $1 \
   --machine q35 \
   --name $2 --numa 0 --ostype l26 \
-  --cpu cputype=host --cores 4 --sockets 1 \
-  --memory 16000  \
+  --cpu cputype=host --cores 8 --sockets 1 \
+  --memory 17000  \
   --net0 bridge=vmbr0,virtio=$3 \
-  --bootdisk scsi0 --scsihw virtio-scsi-single --scsi0 test-lvm-thin:$lvmname,size=200G"
+  --ide2 local:iso/coreos-x86_64.iso,media=cdrom \
+  --bootdisk scsi0 --scsihw virtio-scsi-single --scsi0 test-lvm-thin:$lvmname,size=200G" \
