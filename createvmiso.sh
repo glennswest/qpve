@@ -15,4 +15,4 @@ ssh root@pve.gw.lo "qm create $1 \
   --memory 17000  \
   --net0 bridge=vmbr0,virtio=$3 \
   --ide2 local:iso/coreos-x86_64.iso,media=cdrom \
-  --bootdisk scsi0 --scsihw virtio-scsi-single --scsi0 test-lvm-thin:$lvmname,size=200G" \
+  --bootdisk scsi0 --scsihw virtio-scsi-single --scsi0 test-lvm-thin:$lvmname,size=200G,cache=writeback,discard=on,iothread=1" \
