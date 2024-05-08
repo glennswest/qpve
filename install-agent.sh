@@ -1,4 +1,4 @@
-#./pull-install.sh $1
+./pull-install.sh $1
 rm -r -f gw
 mkdir gw
 cp install-config-agent.yaml gw/install-config.yaml
@@ -17,8 +17,8 @@ cd ..
 echo "Give control nodes head start"
 sleep 120
 ./poweron-vm.sh worker0.gw.lo
-./poweron-vm.sh worker1.gw.lo
-./poweron-vm.sh worker2.gw.lo
+#./poweron-vm.sh worker1.gw.lo
+#./poweron-vm.sh worker2.gw.lo
 openshift-install --dir=gw agent wait-for bootstrap-complete               
 openshift-install --dir=gw agent wait-for install-complete               
 
