@@ -3,4 +3,4 @@ pullsecret.json
 .approvecsr.dat
 gw/*
 install-config.yaml
-
+install-config-agent.yaml
