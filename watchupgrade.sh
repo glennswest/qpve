@@ -1,0 +1,2 @@
+watch oc get clusterversion
+
