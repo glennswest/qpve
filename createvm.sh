@@ -7,12 +7,8 @@ echo $vmid
 export disksize=200G
 export lvmname="vm-$vmid-disk-0"
 
-# Determine LVM thin pool based on node type
-if [[ $2 == control* ]]; then
-    export lvmpool="test-lvm-thin"
-else
-    export lvmpool="services-lvm-thin"
-fi
+# Use production-lvm-thin for all VMs
+export lvmpool="production-lvm-thin"
 
 export drivepath="/dev/$lvmpool/$lvmname"
 ssh root@pve.gw.lo "lvcreate -V$disksize -T $lvmpool/$lvmpool -n $lvmname"

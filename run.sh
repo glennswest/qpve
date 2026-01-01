@@ -2,7 +2,8 @@ rm -r -f gw
 mkdir gw
 cp install-config.yaml gw
 openshift-install create ignition-configs --dir=gw
-cp ~/gw.lo/gw/worker.ign ~
+# Copy worker.ign locally for manual worker additions (optional)
+cp gw/worker.ign ~ 2>/dev/null || true
 rm -f ~/.kube/config
 cp gw/auth/kubeconfig ~/.kube/config
 scp -r gw/* root@boot.gw.lo:/tftp || { echo "Failed to copy ignition configs to boot server"; exit 1; }

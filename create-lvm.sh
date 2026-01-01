@@ -3,12 +3,8 @@
 export vmid=$(./getvmid.sh $1)
 export lvmname="vm-$vmid-disk-0"
 
-# Determine LVM thin pool based on node type
-if [[ $1 == control* ]]; then
-    export lvmpool="test-lvm-thin"
-else
-    export lvmpool="services-lvm-thin"
-fi
+# Use production-lvm-thin for all VMs
+export lvmpool="production-lvm-thin"
 
 export drivepath="/dev/$lvmpool/$lvmname"
 echo $drivepath
