@@ -16,7 +16,7 @@ do
       echo "Approving CSRs: $pending"
       echo "$pending" | xargs oc $OC_OPTS adm certificate approve
    fi
-   sleep 20
+   sleep 5
    thevalue=`cat .approvecsr.dat`
 done
 
