@@ -6,12 +6,20 @@ export vmid=$1
 echo $vmid
 export disksize=200G
 export lvmname="vm-$vmid-disk-0"
-export drivepath="/dev/test-lvm-thin/$lvmname"
-ssh root@pve.gw.lo "lvcreate -V$disksize -T test-lvm-thin/test-lvm-thin -n $lvmname"
+
+# Determine LVM thin pool based on node type
+if [[ $2 == control* ]]; then
+    export lvmpool="test-lvm-thin"
+else
+    export lvmpool="services-lvm-thin"
+fi
+
+export drivepath="/dev/$lvmpool/$lvmname"
+ssh root@pve.gw.lo "lvcreate -V$disksize -T $lvmpool/$lvmpool -n $lvmname"
 ssh root@pve.gw.lo "qm create $1 \
   --machine q35 \
   --name $2 --numa 0 --ostype l26 \
   --cpu cputype=host --cores 4 --sockets 1 \
   --memory 16000  \
   --net0 bridge=vmbr0,virtio=$3 \
-  --bootdisk scsi0 --scsihw virtio-scsi-single --scsi0 test-lvm-thin:$lvmname,size=200G"
+  --bootdisk scsi0 --scsihw virtio-scsi-single --scsi0 $lvmpool:$lvmname,size=200G"

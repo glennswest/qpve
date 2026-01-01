@@ -4,3 +4,10 @@ pullsecret.json
 gw/*
 install-config.yaml
 install-config-agent.yaml
+wip/
+temp/
+rhcos-*.img
+rhcos-*.iso
+rhcos-*.gz
+rhcos-*-kernel-*
+watch_*
