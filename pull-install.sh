@@ -10,13 +10,16 @@ cd ..
 rm -r -f temp
 
 #export theversion="4.12.30"
-export theversion=$1
-export vinfo=$(openshift-install version | head -n 1)
-export installedversion=$(echo $vinfo | cut -d ' ' -f 2)
-echo $installedversion
-if [ $1 == $installedversion ]
-then
-   exit
+if [ -z "$1" ]; then
+   echo "Usage: $0 <version>"
+   exit 1
+fi
+export theversion="$1"
+export vinfo=$(openshift-install version 2>/dev/null | head -n 1)
+export installedversion=$(echo "$vinfo" | cut -d ' ' -f 2)
+echo "$installedversion"
+if [ "$1" = "$installedversion" ]; then
+   exit 0
 fi
 export verx=$(echo $theversion | cut -d '.' -f 1)
 export very=$(echo $theversion | cut -d '.' -f 2)
