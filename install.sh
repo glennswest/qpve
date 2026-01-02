@@ -14,6 +14,6 @@ rm -r -f wip
 mkdir wip
 cd wip
 openshift-install version
-rm -f *.gz 2>/dev/null
+rm *.gz
 cd ..
 ./run.sh
