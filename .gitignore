@@ -1,4 +1,5 @@
 pullsecret.json
+.env/
 .accesstoken
 .approvecsr.dat
 gw/*
