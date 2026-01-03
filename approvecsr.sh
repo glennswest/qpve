@@ -3,6 +3,8 @@ thevalue=`cat .approvecsr.dat`
 
 # Use the kubeconfig from the current install
 export KUBECONFIG=gw/auth/kubeconfig
+# Use separate cache to avoid lock contention with openshift-install
+export KUBECACHEDIR=/tmp/oc-csr-cache
 
 # During early bootstrap, certs rotate and oc can't verify them
 # Use --insecure-skip-tls-verify until certs stabilize
