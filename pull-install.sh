@@ -13,8 +13,10 @@ rm -r -f temp
 export theversion=$1
 export vinfo=$(openshift-install version | head -n 1)
 export installedversion=$(echo $vinfo | cut -d ' ' -f 2)
+export releaseimage=$(openshift-install version | grep "release image" || echo "")
 echo $installedversion
-if [ $1 == $installedversion ]
+# Check version matches AND release image is from quay.io (not local registry)
+if [ "$1" == "$installedversion" ] && echo "$releaseimage" | grep -q "quay.io"
 then
    exit
 fi
