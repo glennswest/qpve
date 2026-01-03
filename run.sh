@@ -18,19 +18,23 @@ echo 1 > .approvecsr.dat
 ./approvecsr.sh &
 CSR_PID=$!
 
-# Power on all VMs in parallel for faster startup
-echo "Powering on all VMs in parallel..."
+# Power on bootstrap and control plane
+echo "Powering on bootstrap and control plane..."
 ./poweron-vm.sh bootstrap.gw.lo &
 ./poweron-vm.sh control0.gw.lo &
 ./poweron-vm.sh control1.gw.lo &
 ./poweron-vm.sh control2.gw.lo &
-./poweron-vm.sh worker0.gw.lo &
-./poweron-vm.sh worker1.gw.lo &
-./poweron-vm.sh worker2.gw.lo &
 wait
 
 openshift-install --dir=gw wait-for bootstrap-complete --log-level debug
 ./poweroff-vm.sh bootstrap.gw.lo
+
+# Start workers after bootstrap is done
+echo "Powering on workers..."
+./poweron-vm.sh worker0.gw.lo &
+./poweron-vm.sh worker1.gw.lo &
+./poweron-vm.sh worker2.gw.lo &
+wait
 
 openshift-install --dir=gw wait-for install-complete --log-level debug
 
