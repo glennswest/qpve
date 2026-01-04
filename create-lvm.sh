@@ -1,13 +1,14 @@
 # create-lvm.sh
-# lvcreate -V200G -T test-lvm-thin/test-lvm-thin -n vm-600-disk-0
+# Creates fixed/thick provisioned LVM volume
 export vmid=$(./getvmid.sh $1)
 export lvmname="vm-$vmid-disk-0"
 
-# Use production-lvm-thin for all VMs
-export lvmpool="production-lvm-thin"
+# Use production-lvm (regular LVM, not thin)
+export vgname="production-lvm-thin"
+export storage="production-lvm"
 
-export drivepath="/dev/$lvmpool/$lvmname"
+export drivepath="/dev/$vgname/$lvmname"
 echo $drivepath
-ssh root@pve.gw.lo "lvremove $drivepath -y"
-ssh root@pve.gw.lo "lvcreate -V$2 -T $lvmpool/$lvmpool -n $lvmname"
+ssh root@pve.gw.lo "lvremove $drivepath -y 2>/dev/null || true"
+ssh root@pve.gw.lo "lvcreate --yes --wipesignatures y -L$2 -n $lvmname $vgname"
 

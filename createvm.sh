@@ -1,21 +1,24 @@
-# Create a empty vm
+# Create an empty vm with fixed/thick provisioned storage
 # $1 is vmid
 # $2 is name
 # $3 is mac
 export vmid=$1
 echo $vmid
-export disksize=200G
+export disksize=60G
 export lvmname="vm-$vmid-disk-0"
 
-# Use production-lvm-thin for all VMs
-export lvmpool="production-lvm-thin"
+# Use production-lvm (regular LVM, not thin)
+export vgname="production-lvm-thin"
+export storage="production-lvm"
 
-export drivepath="/dev/$lvmpool/$lvmname"
-ssh root@pve.gw.lo "lvcreate -V$disksize -T $lvmpool/$lvmpool -n $lvmname"
+export drivepath="/dev/$vgname/$lvmname"
+# Remove existing LV if present
+ssh root@pve.gw.lo "lvremove $drivepath -y 2>/dev/null || true"
+ssh root@pve.gw.lo "lvcreate --yes --wipesignatures y -L$disksize -n $lvmname $vgname"
 ssh root@pve.gw.lo "qm create $1 \
   --machine q35 \
   --name $2 --numa 0 --ostype l26 \
   --cpu cputype=host --cores 4 --sockets 1 \
   --memory 16000  \
   --net0 bridge=vmbr0,virtio=$3 \
-  --bootdisk scsi0 --scsihw virtio-scsi-single --scsi0 $lvmpool:$lvmname,size=200G"
+  --bootdisk scsi0 --scsihw virtio-scsi-single --scsi0 $storage:$lvmname,size=$disksize"
