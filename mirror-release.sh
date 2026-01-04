@@ -66,7 +66,8 @@ oc adm release mirror \
     --from="${UPSTREAM_RELEASE}" \
     --to="${LOCAL_REGISTRY}/${LOCAL_REPO}" \
     --to-release-image="${LOCAL_RELEASE}" \
-    --registry-config="${PULL_SECRET}"
+    --registry-config="${PULL_SECRET}" \
+    --insecure
 
 echo ""
 echo "=== Mirror Complete ==="
