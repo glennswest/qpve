@@ -1,6 +1,6 @@
 vmid=`./getvmid.sh $1`
 lvmname="vm-$vmid-disk-0"
-vgname="production-lvm-thin"
+vgname="production-lvm"
 drivepath="/dev/$vgname/$lvmname"
 
 # Destroy VM first (this removes disk reference from config)

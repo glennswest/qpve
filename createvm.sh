@@ -8,7 +8,7 @@ export disksize=60G
 export lvmname="vm-$vmid-disk-0"
 
 # Use production-lvm (regular LVM, not thin)
-export vgname="production-lvm-thin"
+export vgname="production-lvm"
 export storage="production-lvm"
 
 export drivepath="/dev/$vgname/$lvmname"
